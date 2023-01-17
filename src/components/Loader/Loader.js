@@ -18,8 +18,8 @@ export const LoaderWatch = () => {
   return (
     <>
       <Watch
-        height="12"
-        width="12"
+        height="16"
+        width="16"
         radius="48"
         color="#4fa94d"
         ariaLabel="watch-loading"

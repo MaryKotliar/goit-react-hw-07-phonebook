@@ -73,7 +73,7 @@ export const ContactForm = () => {
         />
 
         <BtnSubmit type="submit" disabled={isLoading}>
-          {isLoading && <LoaderWatch />}Add contact
+          Add contact{isLoading && <LoaderWatch />}
         </BtnSubmit>
       </Form>
     </>

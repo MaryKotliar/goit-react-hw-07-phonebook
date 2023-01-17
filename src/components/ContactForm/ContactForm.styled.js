@@ -16,6 +16,8 @@ export const BtnSubmit = styled.button`
   padding: 4px 10px;
   border-radius: 4px;
   border: 1px solid;
-
   background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
