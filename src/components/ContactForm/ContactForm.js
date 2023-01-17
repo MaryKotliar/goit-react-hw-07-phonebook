@@ -1,16 +1,21 @@
 import { nanoid } from 'nanoid';
 import { Form, BtnSubmit } from './ContactForm.styled';
 import { useState } from 'react';
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/contacts/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
+import { addContacts } from 'redux/contacts/operations';
+import { LoaderWatch } from 'components/Loader/Loader';
+import { selectIsLoading } from 'redux/contacts/selectors';
 const nameInputId = nanoid();
 const numberInputId = nanoid();
+
 export const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsLoading);
+
   const handleSubmit = event => {
     event.preventDefault();
 
@@ -22,7 +27,7 @@ export const ContactForm = () => {
       alert(`${name} is already in contacts`);
       return;
     }
-    dispatch(addContact({ name, number }));
+    dispatch(addContacts({ name, number }));
     setName('');
     setNumber('');
   };
@@ -67,7 +72,9 @@ export const ContactForm = () => {
           id={numberInputId}
         />
 
-        <BtnSubmit type="submit">Add contact</BtnSubmit>
+        <BtnSubmit type="submit" disabled={isLoading}>
+          {isLoading && <LoaderWatch />}Add contact
+        </BtnSubmit>
       </Form>
     </>
   );

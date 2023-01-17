@@ -1,15 +1,23 @@
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Filter } from './Filter/Filter';
 import { Container } from './Container/Container';
 import { GlobalStyle } from './GlobalStyle';
-
-import { getContacts } from 'redux/selectors';
+import { fetchContacts } from 'redux/contacts/operations';
+import { selectError, selectIsLoading } from 'redux/contacts/selectors';
+import { useEffect } from 'react';
+import { selectContacts } from 'redux/contacts/selectors';
+import { Loader } from './Loader/Loader';
 
 export function App() {
-  const contacts = useSelector(getContacts);
-
+  const contacts = useSelector(selectContacts);
+  const error = useSelector(selectError);
+  const isLoading = useSelector(selectIsLoading);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
   return (
     <Container>
       <h1>Phonebook</h1>
@@ -22,7 +30,7 @@ export function App() {
       )}
 
       {contacts.length > 0 && <ContactList />}
-
+      {isLoading && !error && <Loader />}
       <GlobalStyle />
     </Container>
   );

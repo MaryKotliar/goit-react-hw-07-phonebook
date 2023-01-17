@@ -6,6 +6,7 @@ export const Button = styled.button`
   border: 1px solid;
   margin-left: 10px;
   background-color: white;
+  display: inline-flex;
 `;
 export const Wrapper = styled.div`
   display: flex;
