@@ -5,17 +5,26 @@ import { deleteContacts } from 'redux/contacts/operations';
 import { LoaderWatch } from 'components/Loader/Loader';
 import { useSelector } from 'react-redux';
 import { selectIsLoading } from 'redux/contacts/selectors';
+import { useState } from 'react';
 export const Contact = ({ contact: { name, number, id } }) => {
+  const [isDeleting, setIsDeleting] = useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsLoading);
-  const handleDelete = () => dispatch(deleteContacts(id));
+  const handleDelete = () => {
+    setIsDeleting(true);
+    dispatch(deleteContacts(id));
+  };
   return (
     <Wrapper>
       <p>
         {name}: {number}
       </p>
-      <Button type="button" onClick={handleDelete} disabled={isLoading}>
-        Delete {isLoading && <LoaderWatch />}
+      <Button
+        type="button"
+        onClick={handleDelete}
+        disabled={isDeleting && isLoading}
+      >
+        Delete {isDeleting && <LoaderWatch />}
       </Button>
     </Wrapper>
   );
